@@ -83,7 +83,7 @@ class ParseState {
                 self.examples[exampleIndex].pairs.forEach { (key, pair) in
                     let toReplace = "<\(key)>"
                     let replaceWith = pair
-                    newName = newName.replacingOccurrences(of: toReplace, with: replaceWith)
+                    // newName = newName.replacingOccurrences(of: toReplace, with: replaceWith)
                     for stepIndex in 0...newSteps.count - 1 {
                         newSteps[stepIndex].expression = newSteps[stepIndex].expression.replacingOccurrences(of: toReplace, with: replaceWith)
                     }
