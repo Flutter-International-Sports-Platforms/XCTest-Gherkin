@@ -62,20 +62,22 @@ open class NativeTestCase: XCGNativeInitializer {
         }
 
         var userIgnoreTags: [String] = []
-        if let userIgnoreTagsArgumentIndex = CommandLine.arguments.firstIndex(where: { $0.hasPrefix("IgnoreTags=") }) {
-            userIgnoreTags = CommandLine.arguments[userIgnoreTagsArgumentIndex].replacingOccurrences(of: "IgnoreTags=", with: "")
-                                                                                .replacingOccurrences(of: "@", with: "")
-                                                                                .components(separatedBy: ",")
-                                                                                .filter{ !$0.isEmpty }
+        if let userIgnoreTagsArgument = CommandLine.arguments.first(where: { $0.hasPrefix("IgnoreTags=") }) ?? 
+                                            ProcessInfo.processInfo.environment["IgnoreTags="]   {
+            userIgnoreTags = userIgnoreTagsArgument.replacingOccurrences(of: "IgnoreTags=", with: "")
+                                                    .replacingOccurrences(of: "@", with: "")
+                                                    .components(separatedBy: ",")
+                                                    .filter{ !$0.isEmpty }
         }
         userIgnoreTags.append("ignore")
 
         var userTags: [String] = []  
-        if let userTagsArgumentIndex = CommandLine.arguments.firstIndex(where: { $0.hasPrefix("Tags=") }) {
-            userTags = CommandLine.arguments[userTagsArgumentIndex].replacingOccurrences(of: "Tags=", with: "")
-                                                                    .replacingOccurrences(of: "@", with: "")
-                                                                    .components(separatedBy: ",")
-                                                                    .filter{ !$0.isEmpty }
+        if let userTagsArgument = CommandLine.arguments.first(where: { $0.hasPrefix("Tags=") }) ?? 
+                                        ProcessInfo.processInfo.environment["Tags="]   {
+            userTags = userTagsArgument.replacingOccurrences(of: "Tags=", with: "")
+                                        .replacingOccurrences(of: "@", with: "")
+                                        .components(separatedBy: ",")
+                                        .filter{ !$0.isEmpty }
         }
 
         var remainingScenarioCount = 0
@@ -91,7 +93,7 @@ open class NativeTestCase: XCGNativeInitializer {
         }
 
         if remainingScenarioCount == 0 {
-            print("There aren't any scenarios to run. Maybe you need to check the tags you're using?")
+            print("====== There aren't any scenarios to run. Maybe you need to check the tags you're using? ======")
         }
 
         return features
