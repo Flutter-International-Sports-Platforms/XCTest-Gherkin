@@ -91,7 +91,7 @@ open class NativeTestCase: XCGNativeInitializer {
         }
 
         if remainingScenarioCount == 0 {
-            print("There aren't any scenarios to run. Maybe you need to check the tags you're using?")
+            print("======= There aren't any scenarios to run. Maybe you need to check the tags you're using? ==========")
         }
 
         return features
