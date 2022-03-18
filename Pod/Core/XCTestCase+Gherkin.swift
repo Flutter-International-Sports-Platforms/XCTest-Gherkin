@@ -138,7 +138,7 @@ class GherkinState: NSObject, XCTestObservation {
         }
 
         UnusedStepsTracker.shared().setSteps(self.steps.map { String(reflecting: $0) })
-        UnusedStepsTracker.shared().printUnusedSteps = { $0.printAsUnusedSteps() }
+        //UnusedStepsTracker.shared().printUnusedSteps = { $0.printAsUnusedSteps() }
 
         precondition(self.steps.count > 0, "No steps have been defined - there must be at least one subclass of StepDefiner which defines at least one step!")
     }
