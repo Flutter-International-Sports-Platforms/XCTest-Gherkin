@@ -60,7 +60,9 @@ open class NativeTestCase: XCGNativeInitializer {
             do {
                 let jsonData = try NSData(contentsOfFile: globalParamFile, options: .mappedIfSafe)
                 ParseState.globalParams = try JSONSerialization.jsonObject(with: jsonData as Data, options: JSONSerialization.ReadingOptions.mutableContainers) as? NSDictionary
-            } catch {}
+            } catch {
+                assertionFailure("Couldn't read the globalParam.json file. Is it valid json?)
+            }
         }
 
         guard let features = NativeFeatureParser(path: path).parsedFeatures() else {
