@@ -107,13 +107,14 @@ class ParseState {
             }
             
             for exampleIndex in 0...self.examples.count - 1 {
+                var newSteps = steps
                 var newName = name
                 examples[exampleIndex].pairs.forEach { (key, pair) in
                     let toReplace = "<\(key)>"
                     let replaceWith = pair
                     // newName = newName.replacingOccurrences(of: toReplace, with: replaceWith)
-                    for stepIndex in 0..<steps.count where steps[stepIndex].expression.contains(toReplace) {
-                        steps[stepIndex].expression = steps[stepIndex].expression.replacingOccurrences(of: toReplace, with: replaceWith)
+                    for stepIndex in 0..<newSteps.count where newSteps[stepIndex].expression.contains(toReplace) {
+                        newSteps[stepIndex].expression = newSteps[stepIndex].expression.replacingOccurrences(of: toReplace, with: replaceWith)
                     }
                 }
 
@@ -123,7 +124,7 @@ class ParseState {
                     newName = "\(newName)-\(exampleIndex)"
                 }
 
-                scenarios.append(NativeScenario(newName, steps: steps, index: index, tags: tags))
+                scenarios.append(NativeScenario(newName, steps: newSteps, index: index, tags: tags))
             }
         }
 
