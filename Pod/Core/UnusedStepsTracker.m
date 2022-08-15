@@ -56,6 +56,8 @@
     if (self.bundleCounter == 0) {
         NSMutableSet *unusedSteps = self.allSteps;
         [unusedSteps minusSet: self.executedSteps];
+        // We don't need this since it just checks the steps used in the test run,
+        // so if only running 1 test, a lot of steps will appear here.
         // if (unusedSteps.count > 0) {
         //     self.printUnusedSteps(unusedSteps.allObjects);
         // }
