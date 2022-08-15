@@ -194,8 +194,6 @@ extension XCTestCase {
                 let scenario = NativeScenario(outline.scenarioDescription, steps: steps, index: outline.index + exampleIndex)
                 perform(scenario: scenario)
             }
-        } else if scenario.stepDescriptions.filter({ $0.expression.contains("{{") && $0.expression.contains("}}") }).count > 0 {
-
         } else {
             perform(scenario: scenario)
         }
