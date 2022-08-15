@@ -56,7 +56,8 @@ open class NativeTestCase: XCGNativeInitializer {
             return []
         }
 
-        if let globalParamFile = Bundle.main.path(forResource: "\(ProcessInfo.processInfo.environment["XCTestBundlePath"])/globalParam", ofType: "json") {
+        if let xctestPath = ProcessInfo.processInfo.environment["XCTestBundlePath"],
+            let globalParamFile = Bundle.main.path(forResource: "\(xctestPath)/globalParam", ofType: "json") {
             do {
                 let jsonData = try NSData(contentsOfFile: globalParamFile, options: .mappedIfSafe)
                 ParseState.globalParams = try JSONSerialization.jsonObject(with: jsonData as Data, options: JSONSerialization.ReadingOptions.mutableContainers) as? NSDictionary
