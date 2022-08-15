@@ -55,7 +55,14 @@ open class NativeTestCase: XCGNativeInitializer {
             }
             return []
         }
-        
+
+        if let globalParamFile = Bundle.main.path(forResource: "PlugIns/GherkinUITests.xctest/globalParam", ofType: "json") {
+            do {
+                let jsonData = try NSData(contentsOfFile: globalParamFile, options: .mappedIfSafe)
+                ParseState.globalParams = try JSONSerialization.jsonObject(with: jsonData as Data, options: JSONSerialization.ReadingOptions.mutableContainers) as? NSDictionary
+            } catch {}
+        }
+
         guard let features = NativeFeatureParser(path: path).parsedFeatures() else {
             assertionFailure("Could not retrieve features from the path '\(path)'")
             return []
@@ -184,6 +191,8 @@ extension XCTestCase {
                 let scenario = NativeScenario(outline.scenarioDescription, steps: steps, index: outline.index + exampleIndex)
                 perform(scenario: scenario)
             }
+        } else if scenario.stepDescriptions.filter({ $0.expression.contains("{{") && $0.expression.contains("}}") }).count > 0 {
+
         } else {
             perform(scenario: scenario)
         }
