@@ -56,9 +56,9 @@
     if (self.bundleCounter == 0) {
         NSMutableSet *unusedSteps = self.allSteps;
         [unusedSteps minusSet: self.executedSteps];
-        if (unusedSteps.count > 0) {
-            self.printUnusedSteps(unusedSteps.allObjects);
-        }
+        // if (unusedSteps.count > 0) {
+        //     self.printUnusedSteps(unusedSteps.allObjects);
+        // }
     }
 }
 
