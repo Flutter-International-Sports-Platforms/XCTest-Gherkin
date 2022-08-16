@@ -75,8 +75,7 @@ class ParseState {
         let globalParamOpeningChar = "{{"
         let globalParamClosingChar = "}}"
 
-        if steps.filter({ $0.expression.contains(globalParamOpeningChar) &&
-            $0.expression.contains(globalParamClosingChar) }).count > 0 &&
+        if steps.filter({ $0.expression.contains(globalParamOpeningChar) &&  $0.expression.contains(globalParamClosingChar) }).count > 0 &&
             ParseState.globalParams != nil {
             for stepIndex in 0..<steps.count where steps[stepIndex].expression.contains(globalParamOpeningChar) && steps[stepIndex].expression.contains(globalParamClosingChar) {
                 for (key, value) in ParseState.globalParams! where steps[stepIndex].expression.contains("\(globalParamOpeningChar)\(key)\(globalParamClosingChar)") {
