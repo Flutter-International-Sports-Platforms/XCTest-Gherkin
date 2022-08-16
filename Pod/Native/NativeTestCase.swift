@@ -56,10 +56,10 @@ open class NativeTestCase: XCGNativeInitializer {
             return []
         }
 
-        if let globalParamsFile = Bundle(for: self).path(forResource: "globalParams", ofType: "json") {
+        if let globalParamsFile = Bundle(for: self).url(forResource: "globalParams", withExtension: "json") {
             do {
-                let jsonData = try NSData(contentsOfFile: globalParamsFile, options: .mappedIfSafe)
-                ParseState.globalParams = try JSONSerialization.jsonObject(with: jsonData as Data, options: JSONSerialization.ReadingOptions.mutableContainers) as? NSDictionary
+                let jsonData = try Data(contentsOf: globalParamsFile, options: .mappedIfSafe)
+                ParseState.globalParams = try JSONSerialization.jsonObject(with: jsonData, options: .mutableContainers) as? NSDictionary
             } catch {
                 assertionFailure("Couldn't read the globalParams.json file. Is it valid json?")
             }
