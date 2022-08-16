@@ -55,7 +55,16 @@ open class NativeTestCase: XCGNativeInitializer {
             }
             return []
         }
-        
+
+        if let globalParamsFile = Bundle(for: self).url(forResource: "globalParams", withExtension: "json") {
+            do {
+                let jsonData = try Data(contentsOf: globalParamsFile, options: .mappedIfSafe)
+                ParseState.globalParams = try JSONSerialization.jsonObject(with: jsonData, options: .mutableContainers) as? NSDictionary
+            } catch {
+                assertionFailure("Couldn't read the globalParams.json file. Is it valid json?")
+            }
+        }
+
         guard let features = NativeFeatureParser(path: path).parsedFeatures() else {
             assertionFailure("Could not retrieve features from the path '\(path)'")
             return []
