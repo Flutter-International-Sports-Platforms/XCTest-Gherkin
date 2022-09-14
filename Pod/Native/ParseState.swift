@@ -104,7 +104,7 @@ class ParseState {
                     }
                 }
             }
-            
+
             for exampleIndex in 0...self.examples.count - 1 {
                 var newSteps = steps
                 var newName = name
@@ -120,7 +120,8 @@ class ParseState {
                 // Ensuring Scenario names are unique in case the name doesn't have an Example replacement in
                 let nameAlreadyExists = scenarios.firstIndex(where: { $0.name == newName })
                 if (newName == name)  || (nameAlreadyExists != nil) {
-                    newName = "\(newName)-\(exampleIndex)"
+                    let zeroedIndex = String(format: "%0\(String(self.examples.count).count)d", exampleIndex)
+                    newName = "\(newName)-\(zeroedIndex)"
                 }
 
                 scenarios.append(NativeScenario(newName, steps: newSteps, index: index, tags: tags))
