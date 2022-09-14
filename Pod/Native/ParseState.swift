@@ -120,7 +120,8 @@ class ParseState {
                 // Ensuring Scenario names are unique in case the name doesn't have an Example replacement in
                 let nameAlreadyExists = scenarios.firstIndex(where: { $0.name == newName })
                 if (newName == name)  || (nameAlreadyExists != nil) {
-                    let zeroedIndex = String(format: "%0\(String(self.examples.count).count)d", exampleIndex)
+                    let lengthOfExampleCount = String(self.examples.count).count
+                    let zeroedIndex = String(format: "%0\(lengthOfExampleCount)d", exampleIndex)
                     newName = "\(newName)-\(zeroedIndex)"
                 }
 
