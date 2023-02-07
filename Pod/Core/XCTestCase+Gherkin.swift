@@ -68,9 +68,22 @@ class GherkinState: NSObject, XCTestObservation {
                 test.attachScreenshot()
             }
         }
-        test.recordFailure(withDescription: description, inFile: file, atLine: line, expected: false)
+        // Create issue, declare with `var` for mutability.
+        var issue = XCTIssue(type: .assertionFailure, compactDescription: description)
+
+        // Capture the call site location as the point of failure.
+        let location = XCTSourceCodeLocation(filePath: file, lineNumber: line)
+        issue.sourceCodeContext = XCTSourceCodeContext(location: location)
+
+        // Record the issue.
+        test.record(issue)
         if let exampleLineNumber = self.currentNativeExampleLineNumber, lineNumber != exampleLineNumber {
-            test.recordFailure(withDescription: description, inFile: file, atLine: exampleLineNumber, expected: false)
+            // Capture the call site location as the point of failure.
+            let location = XCTSourceCodeLocation(filePath: file, lineNumber: exampleLineNumber)
+            issue.sourceCodeContext = XCTSourceCodeContext(location: location)
+
+            // Record the issue.
+            test.record(issue)
         }
     }
 
